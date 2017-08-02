@@ -1,0 +1,170 @@
+                                "Vundle - Plugin Management"
+" - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+filetype off                  
+set rtp+=~/.vim/bundle/Vundle.vim
+call vundle#begin()
+Plugin 'VundleVim/Vundle.vim'
+Plugin 'easymotion/vim-easymotion'
+Plugin 'vim-airline/vim-airline'
+Plugin 'vim-airline/vim-airline-themes'
+Plugin 'scrooloose/nerdtree'
+Plugin 'ctrlpvim/ctrlp.vim'
+Plugin 'tacahiroy/ctrlp-funky'
+Plugin 'majutsushi/tagbar'
+Plugin 'jiangmiao/auto-pairs'
+Plugin 'jistr/vim-nerdtree-tabs'
+Plugin 'octol/vim-cpp-enhanced-highlight'
+Plugin 'scrooloose/nerdcommenter'
+Plugin 'tpope/vim-repeat'
+" Plugin 'w0rp/ale'
+Plugin 'junegunn/fzf'
+Plugin 'tpope/vim-surround'
+Plugin 'arcticicestudio/nord-vim'
+" Plugin 'maralla/validator.vim'
+" Plugin 'maralla/completor.vim'
+" Plugin 'tpope/vim-dispatch'
+Plugin 'skywind3000/asyncrun.vim'
+Plugin 'ap/vim-css-color'
+Plugin 'Valloric/YouCompleteMe'
+Plugin 'trusktr/seti.vim'
+call vundle#end()            
+filetype plugin indent on
+
+                                          "General"
+" - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+set nocompatible                " 关闭vi兼容性设置
+set autoread                    " 当前文件有改动时自动重新载入
+set ignorecase                  " 搜索忽略大小写
+set wildmenu                    " ExMode补全命令时显示补全菜单
+set shortmess+=filmnrxoott      " 精简信息显示
+set history=1000                " 保存历史记录行数
+set foldmethod=marker           " 按照语法折叠
+set timeoutlen=450              " 最大击键间隔
+
+"
+                                          "Appearance" 
+" - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+syntax on                                               " 语法高亮
+set number                                              " 显示行号
+set showmatch                                           " 高亮显示匹配括号
+set laststatus=2                                        " 显示状态栏，用于airline
+set guifont=Powerline_Consolas:h15          " 设置Vim的字体大小
+set guifontwide=PingFang_SC:h15                         " 设置中文字体
+set guioptions-=r                                       " 隐藏右边的滚动条
+set guioptions-=L                                       " 隐藏左边的滚动条
+let g:onedark_termcolors=256
+colorscheme one" 设置主题
+set background=light" 设置背景色
+set completeopt-=preview                                " 关闭补全时的preview窗口
+hi pmenusel ctermbg=lightblue guibg=lightblue           
+highlight clear SignColumn
+hi link cerrinparen none
+
+
+
+                                           "Format"                                            
+" - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+set nowrap                      " 不折行
+set autoindent                  " 自动缩进
+set et sw=4 ts=4 sts=4          " 缩进Tab为4个空格
+autocmd FileType make set noexpandtab shiftwidth=8 softtabstop=0
+set splitright                  " 设置垂直分割时，新窗口出现在右边
+set splitbelow                  " 设置水平分割时，新窗口出现在下面
+
+
+
+                                       "Key (re)Mapping"
+" - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+let mapleader = "\<space>"
+let maplocalleader = ','
+inoremap kj <esc>
+nmap <leader>j :bp<cr>
+nmap <leader>k :bn<cr>
+nnoremap <leader>wh <c-w>h
+nnoremap <leader>wl <c-w>l
+nnoremap <leader>wk <c-w>k
+nnoremap <leader>wj <c-w>j
+nmap <leader>q :q<cr>
+nmap <leader>el :lopen<cr>
+nmap <leader>ec :lclose<cr>
+nmap <leader>qc :cclose<cr>
+nmap <leader>qo :copen<cr>
+nmap <leader>p :CtrlP<cr>
+nmap <leader>f :CtrlPFunky<cr>
+nmap <leader>1 :NERDTreeTabsToggle<cr>
+nmap <leader>2 :TagbarToggle<cr>
+nmap <leader>ls :cs find s <c-r>=expand("<cword>")<cr><cr>
+nmap <leader>lg :cs find g <c-r>=expand("<cword>")<cr><cr>
+nmap <leader>lc :cs find c <c-r>=expand("<cword>")<cr><cr>
+nmap <leader>lt :cs find t <c-r>=expand("<cword>")<cr><cr>
+nmap <leader>le :cs find e <c-r>=expand("<cword>")<cr><cr>
+nmap <leader>lf :cs find f <c-r>=expand("<cfile>")<cr><cr>
+nmap <leader>li :cs find i ^<c-r>=expand("<cfile>")<cr>$<cr>
+nmap <leader>ld :cs find d <c-r>=expand("<cword>")<cr><cr>
+map <leader> <plug>(easymotion-prefix)
+map <D-/> :call NERDComment(0,"toggle")<CR>
+map <f2> :pyf ~/script/clang-rename.py<cr>
+map <f3> :pyf ~/script/clang-format.py<cr>
+map <f4> :e %:p:s,.h$,.x123x,:s,.c$,.h,:s,.x123x$,.c,<cr>
+" map <f5> :silent exec "!source ~/script/update_cscope.sh"<cr>
+
+inoremap <expr> <Tab> pumvisible() ? "\<C-n>" : "\<Tab>"
+inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
+inoremap <expr> <cr> pumvisible() ? "\<C-y>\<cr>" : "\<cr>"
+
+
+
+
+let g:ale_sign_column_always = 1
+
+" airline {
+    let g:airline_theme='one'
+    let g:airline_powerline_fonts = 1
+    let g:airline#extensions#tabline#enabled = 1
+" }
+
+" easymotion {
+let g:EasyMotion_smartcase = 1
+" }
+
+" nerdtree {
+    let g:nerdtree_tabs_open_on_gui_startup = 0
+" }
+
+" nerdcommenter {
+    let g:NERDSpaceDelims = 1
+    let g:NERDDefaultAlign = 'left'
+" }
+
+" youcompleteme {
+    let g:ycm_confirm_extra_conf = 0
+    " let g:ycm_key_invoke_completion = ''
+    let g:ycm_always_populate_location_list = 1
+    let g:ycm_collect_identifiers_from_tags_files = 1
+" }
+
+" cscope {
+    cs add cscope.out
+    hi modemsg guifg=#ff3030
+" }
+
+" vim git gutter {
+    set updatetime=250
+" }
+
+if (empty($tmux))
+    if (has("nvim"))
+        let $nvim_tui_enable_true_color=1
+    endif
+    if (has("termguicolors"))
+        set termguicolors
+    endif
+endif
+
+set fileencodings=utf-8,ucs-bom,gb18030,gbk,gb2312,cp936
+   set termencoding=utf-8
+   set encoding=utf-8
+
+let g:completor_clang_binary = 'clang'
+" autocmd filetype cpp nnoremap <F5> : w<cr> :Dispatch  <CR>
+autocmd filetype cpp nnoremap <F5> :w <bar> AsyncRun g++ '%' -o '%:r' && ./'%:r'<CR>
